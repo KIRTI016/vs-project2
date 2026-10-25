@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transactions | Ledgerly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-protected>
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="dashboard.html"><span class="brand-mark">L</span> Ledgerly</a><nav class="side-nav" aria-label="Main navigation"><a class="nav-link" href="dashboard.html"><span class="nav-icon">&#9638;</span> Overview</a><a class="nav-link active" href="expenses.html"><span class="nav-icon">&#8644;</span> Transactions</a><a class="nav-link" href="budgets.html"><span class="nav-icon">&#9673;</span> Budgets</a></nav><div class="sidebar-bottom"><span class="sidebar-note">A little more clarity,<br>every month.</span><button class="signout-button" data-logout type="button">Sign out <span aria-hidden="true">&#8599;</span></button></div></aside>
+    <main class="main-content">
+      <header class="topbar"><div><span class="eyebrow">PERSONAL FINANCE</span><h1>Transactions</h1></div><div class="user-chip"><span class="avatar" data-avatar>U</span><span data-user-name>Account</span></div></header>
+      <section class="page-intro"><div><p class="eyebrow">YOUR ACTIVITY</p><h2>Every detail, accounted for.</h2></div><span class="date-stamp" data-expense-count>0 transactions</span></section>
+      <div class="transactions-layout">
+        <section class="surface expense-form-surface"><div class="section-heading"><div><p class="eyebrow" data-form-eyebrow>NEW TRANSACTION</p><h3 data-form-title>Add an expense</h3></div><span class="form-accent">01</span></div>
+          <div class="alert alert-success d-none" data-form-success role="status" aria-live="polite"></div>
+          <div class="alert alert-danger d-none" data-form-error role="alert"></div>
+          <form data-expense-form>
+            <label class="form-label" for="expense-amount">Amount</label><div class="input-group input-group-lg amount-input"><span class="input-group-text">₹</span><input class="form-control" id="expense-amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div>
+            <div class="row g-3 mt-1"><div class="col-12"><label class="form-label" for="expense-category">Category</label><select class="form-select" id="expense-category" name="category" required><option value="">Select a category</option><option>Food</option><option>Transport</option><option>Shopping</option><option>Bills</option><option>Health</option><option>Education</option><option>Entertainment</option><option>Other</option></select></div><div class="col-12"><label class="form-label" for="expense-date">Date</label><input class="form-control" id="expense-date" name="date" type="date" required></div><div class="col-12"><label class="form-label" for="expense-description">Description <span class="optional-label">Optional</span></label><input class="form-control" id="expense-description" name="description" maxlength="240" placeholder="What was it for?"></div><div class="col-12"><label class="form-label" for="expense-payment">Payment method</label><select class="form-select" id="expense-payment" name="payment_method" required><option value="">Select a payment method</option><option>Cash</option><option>UPI</option><option>Card</option><option>Bank Transfer</option></select></div></div>
+            <button class="btn btn-primary btn-lg w-100 mt-4" type="submit" data-submit-expense>Add expense <span aria-hidden="true">&#8594;</span></button><button class="btn btn-link w-100 d-none" type="button" data-cancel-edit>Cancel editing</button>
+          </form>
+        </section>
+        <section class="surface expenses-list-surface"><div class="section-heading"><div><p class="eyebrow">YOUR RECORDS</p><h3>Expenses</h3></div><span class="list-total" data-filter-total>₹0.00</span></div>
+          <div class="filters-row"><div class="filter-field"><label class="form-label" for="filter-category">Category</label><select class="form-select" id="filter-category"><option value="">All categories</option><option>Food</option><option>Transport</option><option>Shopping</option><option>Bills</option><option>Health</option><option>Education</option><option>Entertainment</option><option>Other</option><option>Housing</option><option>Utilities</option></select></div><div class="filter-field"><label class="form-label" for="filter-start">From</label><input class="form-control" id="filter-start" type="date"></div><div class="filter-field"><label class="form-label" for="filter-end">To</label><input class="form-control" id="filter-end" type="date"></div><button class="btn btn-outline-dark filter-clear" type="button" data-clear-filters>Clear</button></div>
+          <div class="alert alert-danger d-none" data-list-error role="alert"></div>
+          <p class="expense-loading d-none" data-expense-loading role="status" aria-live="polite">Loading expenses...</p>
+          <div class="table-responsive"><table class="table expense-table"><thead><tr><th scope="col">Description</th><th scope="col">Category</th><th scope="col">Date</th><th scope="col">Payment</th><th scope="col" class="text-end">Amount</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead><tbody data-expense-rows></tbody></table></div><div class="empty-table d-none" data-empty-expenses>No expenses match these filters.</div>
+        </section>
+      </div>
+      <footer class="page-footer">Ledgerly <span>Keep your money in view.</span></footer>
+    </main>
+  </div>
+  <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/auth.js"></script><script src="js/expenses.js"></script>
+</body>
+</html>
