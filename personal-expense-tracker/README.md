@@ -60,6 +60,9 @@ Restart the backend after setting the values. The Google button creates a Ledger
 - Add expenses with a category, date, payment method, and optional description; view, edit, delete, and filter personal expense history
 - Record income and see monthly income, expense, and net balance totals
 - Set overall or category-specific monthly budgets and track spending progress
+- Simulate a possible purchase against category and overall monthly budgets without saving a transaction
+- Track recurring expenses and subscriptions with weekly, monthly, or yearly schedules and monthly cost estimates
+- Read original personal-finance learning material, bookmark chapters, and resume progress in the Money Library
 - Review current-month category spending and compare it with the matching date range in the previous month
 - View a monthly spending-by-category chart and recent expenses
 - Responsive layout for desktop and mobile screens
@@ -80,11 +83,18 @@ All endpoints are prefixed with `/api`.
 | `PUT`, `DELETE` | `/income/<id>` | Update or delete an income record |
 | `GET` | `/budgets?month=YYYY-MM` | Read monthly budgets and spending |
 | `POST` | `/budgets` | Create or update a monthly budget |
+| `POST` | `/budgets/simulate` | Read-only purchase impact preview for a category and month |
 | `DELETE` | `/budgets/<id>` | Delete a budget |
 | `GET` | `/dashboard` | Read monthly totals and category breakdown |
+| `GET` | `/dashboard/spending-history` | Read the authenticated user's monthly expense totals for the current month and previous six months |
 | `GET` | `/insights` | Read current-month spending and previous-period category comparisons |
+| `GET`, `POST` | `/recurring` | List recurring schedules and create a schedule |
+| `PUT`, `DELETE` | `/recurring/<id>` | Update or delete a recurring schedule |
 
 Expense list filters are optional query parameters: `category`, `start=YYYY-MM-DD`, and `end=YYYY-MM-DD`.
+Purchase simulations require a JSON body with `amount`, `category`, and `month` (`YYYY-MM`); `name` is optional. They require an authenticated session and never create or modify an expense.
+Recurring schedules are separate from transactions and never create expenses automatically. Monthly estimates use 52 weeks divided by 12 for weekly schedules, the entered amount for monthly schedules, and the annual amount divided by 12 for yearly schedules.
+The protected Money Library and reader are static frontend pages. Chapter progress, bookmarks, and font-size preference are stored locally in the browser only; they do not contain account credentials or transaction records.
 
 ## Tests
 

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Money Library | Ledgerly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-protected>
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="dashboard.html"><span class="brand-mark">L</span> Ledgerly</a><nav class="side-nav" aria-label="Main navigation"><a class="nav-link" href="dashboard.html"><span class="nav-icon">&#9638;</span> Overview</a><a class="nav-link" href="expenses.html"><span class="nav-icon">&#8644;</span> Transactions</a><a class="nav-link" href="budgets.html"><span class="nav-icon">&#9673;</span> Budgets</a><a class="nav-link" href="recurring.html"><span class="nav-icon">&#8635;</span> Recurring</a><a class="nav-link active" href="library.html"><span class="nav-icon">&#9635;</span> Library</a></nav><div class="sidebar-bottom"><span class="sidebar-note">A little more clarity,<br>every month.</span><button class="signout-button" data-logout type="button">Sign out <span aria-hidden="true">&#8599;</span></button></div></aside>
+    <main class="main-content library-content">
+      <header class="topbar"><div><span class="eyebrow">LEARN AT YOUR OWN PACE</span><h1>Money Library</h1></div><div class="user-chip"><span class="avatar" data-avatar>U</span><span data-user-name>Account</span></div></header>
+      <section class="library-welcome">
+        <div><p class="eyebrow">A QUIETER KIND OF MONEY EDUCATION</p><h2>Build knowledge, one page at a time.</h2><p>Explore practical personal finance lessons at your own pace. Save a chapter, return when you like, and make the ideas your own.</p></div>
+        <div class="library-search-wrap"><label class="visually-hidden" for="library-search">Search books and learning resources</label><span aria-hidden="true">&#9906;</span><input id="library-search" type="search" class="form-control" placeholder="Search titles, topics, and ideas" autocomplete="off"></div>
+      </section>
+      <section class="featured-book" aria-labelledby="featured-title">
+        <div class="featured-copy"><p class="eyebrow">THE FEATURED BOOK</p><h2 id="featured-title">The Art of Managing Money</h2><p>A practical beginner's guide to understanding, organizing, and growing your financial confidence.</p><div class="featured-meta"><span>12 chapters</span><span>About 26 minutes</span><span>Beginner friendly</span></div><a class="btn btn-light featured-button" href="reader.html?book=art-of-managing-money&amp;chapter=0">Open the book <span aria-hidden="true">&#8594;</span></a></div>
+        <a class="library-cover-link" href="reader.html?book=art-of-managing-money&amp;chapter=0" aria-label="Open The Art of Managing Money">
+          <div class="book-cover cover-featured" aria-hidden="true"><span class="cover-topline">A LEDGERLY FIELD GUIDE</span><span class="cover-illustration"><i></i><b></b><em></em></span><span class="cover-title">The Art of<br>Managing<br>Money</span><span class="cover-subtitle">A thoughtful guide to everyday finances</span><span class="cover-author">LEDGERLY LEARNING</span></div>
+        </a>
+      </section>
+      <section class="continue-section d-none" data-continue-section aria-labelledby="continue-title">
+        <div class="continue-cover"><div class="book-cover cover-mini cover-featured" aria-hidden="true"><span class="cover-mini-mark">M</span><span class="cover-mini-title">The Art of<br>Managing Money</span></div></div>
+        <div class="continue-copy"><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2 id="continue-title" data-continue-book></h2><p data-continue-chapter></p><div class="library-progress"><span data-continue-progress-bar></span></div><small data-continue-progress></small></div>
+        <a class="btn btn-primary" data-continue-link href="reader.html">Continue reading <span aria-hidden="true">&#8594;</span></a>
+      </section>
+      <section class="library-section" aria-labelledby="library-heading">
+        <div class="library-section-heading"><div><p class="eyebrow">A GOOD PLACE TO BEGIN</p><h2 id="library-heading">Your Library</h2></div><button class="library-bookmark-filter" type="button" data-bookmarks-filter aria-pressed="false"><span aria-hidden="true">☆</span> Bookmarked chapters</button></div>
+        <div class="library-filters" role="group" aria-label="Filter by topic">
+          <button type="button" class="topic-chip is-selected" data-topic="All" aria-pressed="true">All topics</button>
+          <button type="button" class="topic-chip" data-topic="Budgeting" aria-pressed="false">Budgeting</button>
+          <button type="button" class="topic-chip" data-topic="Saving" aria-pressed="false">Saving</button>
+          <button type="button" class="topic-chip" data-topic="Spending" aria-pressed="false">Spending</button>
+          <button type="button" class="topic-chip" data-topic="Debt" aria-pressed="false">Debt</button>
+          <button type="button" class="topic-chip" data-topic="Financial Goals" aria-pressed="false">Financial Goals</button>
+          <button type="button" class="topic-chip" data-topic="Subscriptions" aria-pressed="false">Subscriptions</button>
+        </div>
+        <p class="library-results-count" data-library-count role="status" aria-live="polite"></p>
+        <div class="library-grid" data-library-grid></div>
+        <div class="library-empty d-none" data-library-empty><span aria-hidden="true">⌕</span><h3>No matching reads just yet</h3><p>Try another search or topic, or clear the bookmarked-chapters filter.</p><button class="btn btn-outline-dark" type="button" data-clear-library-filters>Clear filters</button></div>
+      </section>
+      <aside class="library-disclaimer"><strong>A note about this library</strong><p>These materials offer general financial education, not individualized financial, investment, tax, legal, or debt advice. Verify current product terms and consult a qualified professional for decisions specific to your situation.</p></aside>
+      <footer class="page-footer">Ledgerly <span>Keep your money in view.</span></footer>
+    </main>
+  </div>
+  <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/auth.js"></script><script src="js/money-library-data.js"></script><script src="js/library.js"></script>
+</body>
+</html>

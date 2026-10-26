@@ -1,5 +1,6 @@
 from datetime import date
 import math
+import re
 
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
@@ -13,13 +14,23 @@ income_bp = Blueprint("income", __name__)
 def parse_income(data):
     if not isinstance(data, dict):
         return None, "Request body must be a JSON object"
+    amount_value = data.get("amount")
+    if isinstance(amount_value, bool):
+        return None, "Enter a valid amount and date"
     try:
-        amount = float(data.get("amount"))
-        income_date = date.fromisoformat(str(data.get("date", "")))
+        amount = float(amount_value)
+        date_value = data.get("date")
+        if not isinstance(date_value, str) or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", date_value):
+            raise ValueError
+        income_date = date.fromisoformat(date_value)
     except (TypeError, ValueError):
         return None, "Enter a valid amount and date"
-    source = str(data.get("source", "")).strip()
-    description = str(data.get("description", "")).strip()
+    source_value = data.get("source")
+    description_value = data.get("description", "")
+    if not isinstance(source_value, str) or not isinstance(description_value, str):
+        return None, "Source and description must be text"
+    source = source_value.strip()
+    description = description_value.strip()
     if not math.isfinite(amount) or amount <= 0 or amount > 100000000:
         return None, "Amount must be greater than zero"
     if not source or len(source) > 60 or len(description) > 240:

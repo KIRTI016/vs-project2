@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     expenses = db.relationship("Expense", backref="user", cascade="all, delete-orphan")
     incomes = db.relationship("Income", backref="user", cascade="all, delete-orphan")
     budgets = db.relationship("Budget", backref="user", cascade="all, delete-orphan")
+    recurring_expenses = db.relationship("RecurringExpense", backref="user", cascade="all, delete-orphan")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -79,6 +80,32 @@ class Budget(db.Model):
             "category": self.category,
             "month": self.month.isoformat(),
             "amount": self.amount,
+        }
+
+
+class RecurringExpense(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
+    name = db.Column(db.String(100), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    category = db.Column(db.String(40), nullable=False)
+    frequency = db.Column(db.String(10), nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    next_due_date = db.Column(db.Date, nullable=False)
+    notes = db.Column(db.String(240), nullable=False, default="")
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "amount": self.amount,
+            "category": self.category,
+            "frequency": self.frequency,
+            "start_date": self.start_date.isoformat(),
+            "next_due_date": self.next_due_date.isoformat(),
+            "notes": self.notes,
+            "is_active": self.is_active,
         }
 
 

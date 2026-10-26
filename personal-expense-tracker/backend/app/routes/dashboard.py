@@ -50,3 +50,51 @@ def summary():
         "category_totals": [{"category": category, "amount": round(float(amount), 2)} for category, amount in grouped],
         "recent_expenses": [expense.to_dict() for expense in recent],
     })
+
+
+@dashboard_bp.get("/spending-history")
+@login_required
+def spending_history():
+    today = date.today()
+    current_month_start = today.replace(day=1)
+    month_keys = []
+    for months_ago in range(6, -1, -1):
+        month_index = today.year * 12 + today.month - 1 - months_ago
+        year, zero_based_month = divmod(month_index, 12)
+        month_keys.append(f"{year:04d}-{zero_based_month + 1:02d}")
+
+    first_month_index = today.year * 12 + today.month - 1 - 6
+    first_year, first_zero_based_month = divmod(first_month_index, 12)
+    history_start = date(first_year, first_zero_based_month + 1, 1)
+    next_month = date(today.year + (today.month == 12), today.month % 12 + 1, 1)
+    year_expression = func.extract("year", Expense.date)
+    month_expression = func.extract("month", Expense.date)
+    grouped_expenses = db.session.query(
+        year_expression,
+        month_expression,
+        func.coalesce(func.sum(Expense.amount), 0),
+        func.count(Expense.id),
+    ).filter(
+        Expense.user_id == current_user.id,
+        Expense.date >= history_start,
+        Expense.date < next_month,
+    ).group_by(year_expression, month_expression).all()
+
+    totals = {
+        f"{int(year):04d}-{int(month):02d}": {
+            "total": round(float(amount), 2),
+            "expense_count": count,
+        }
+        for year, month, amount, count in grouped_expenses
+    }
+    months = [{
+        "month": month_key,
+        "total": totals.get(month_key, {}).get("total", 0),
+        "expense_count": totals.get(month_key, {}).get("expense_count", 0),
+    } for month_key in month_keys]
+    current_month = next(item for item in months if item["month"] == current_month_start.strftime("%Y-%m"))
+
+    return jsonify({
+        "current_month": current_month,
+        "months": months,
+    })

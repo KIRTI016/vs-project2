@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recurring payments | Ledgerly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-protected>
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="dashboard.html"><span class="brand-mark">L</span> Ledgerly</a><nav class="side-nav" aria-label="Main navigation"><a class="nav-link" href="dashboard.html"><span class="nav-icon">&#9638;</span> Overview</a><a class="nav-link" href="expenses.html"><span class="nav-icon">&#8644;</span> Transactions</a><a class="nav-link" href="budgets.html"><span class="nav-icon">&#9673;</span> Budgets</a><a class="nav-link active" href="recurring.html"><span class="nav-icon">&#8635;</span> Recurring</a><a class="nav-link" href="library.html"><span class="nav-icon">&#9635;</span> Library</a></nav><div class="sidebar-bottom"><span class="sidebar-note">A little more clarity,<br>every month.</span><button class="signout-button" data-logout type="button">Sign out <span aria-hidden="true">&#8599;</span></button></div></aside>
+    <main class="main-content">
+      <header class="topbar"><div><span class="eyebrow">PERSONAL FINANCE</span><h1>Recurring payments</h1></div><div class="user-chip"><span class="avatar" data-avatar>U</span><span data-user-name>Account</span></div></header>
+      <section class="page-intro"><div><p class="eyebrow">SUBSCRIPTIONS &amp; SCHEDULES</p><h2>Know what's coming up.</h2></div></section>
+      <section class="recurring-summary" aria-label="Recurring payment summary">
+        <article class="summary-tile tile-balance"><span class="tile-label">Estimated recurring cost per month</span><strong data-monthly-estimate>₹0.00</strong><span class="tile-foot">Active schedules only</span></article>
+        <article class="summary-tile"><span class="tile-label">Due in the next 30 days</span><strong data-upcoming-total>₹0.00</strong><span class="tile-foot" data-upcoming-count>0 upcoming payments</span></article>
+      </section>
+      <p class="recurring-explanation">Monthly estimates convert weekly amounts using 52 weeks ÷ 12 months and yearly amounts using the annual amount ÷ 12. Upcoming totals include active schedules whose next due date falls within the next 30 days. Schedules are reminders only; no expenses are created automatically.</p>
+      <div class="recurring-layout">
+        <section class="surface recurring-form-surface">
+          <div class="section-heading"><div><p class="eyebrow">PAYMENT DETAILS</p><h3 data-recurring-form-title>Add recurring payment</h3></div><span class="form-accent">04</span></div>
+          <div class="alert alert-danger d-none" data-recurring-error role="alert"></div>
+          <form data-recurring-form>
+            <label class="form-label" for="recurring-name">Name</label>
+            <input class="form-control mb-3" id="recurring-name" name="name" maxlength="100" placeholder="e.g. Music subscription" required>
+            <label class="form-label" for="recurring-amount">Amount</label>
+            <div class="input-group amount-input mb-3"><span class="input-group-text">₹</span><input class="form-control" id="recurring-amount" name="amount" type="number" min="0.01" max="100000000" step="0.01" placeholder="0.00" required></div>
+            <div class="recurring-form-row">
+              <div><label class="form-label" for="recurring-category">Category</label><select class="form-select" id="recurring-category" name="category" required><option value="">Choose category</option><option>Food</option><option>Transport</option><option>Shopping</option><option>Bills</option><option>Health</option><option>Education</option><option>Entertainment</option><option>Housing</option><option>Utilities</option><option>Other</option></select></div>
+              <div><label class="form-label" for="recurring-frequency">Frequency</label><select class="form-select" id="recurring-frequency" name="frequency" required><option value="">Choose frequency</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="yearly">Yearly</option></select></div>
+            </div>
+            <div class="recurring-form-row mt-3">
+              <div><label class="form-label" for="recurring-start-date">Start date</label><input class="form-control" id="recurring-start-date" name="start_date" type="date" required></div>
+              <div><label class="form-label" for="recurring-next-due-date">Next due date</label><input class="form-control" id="recurring-next-due-date" name="next_due_date" type="date" required></div>
+            </div>
+            <label class="form-label mt-3" for="recurring-notes">Notes <span class="optional-label">Optional</span></label>
+            <textarea class="form-control" id="recurring-notes" name="notes" rows="2" maxlength="240" placeholder="Add a reminder or detail"></textarea>
+            <label class="recurring-active-toggle mt-3"><input type="checkbox" name="is_active" checked> Keep this schedule active</label>
+            <button class="btn btn-primary btn-lg w-100 mt-4" type="submit" data-recurring-submit>Save schedule <span aria-hidden="true">&#8594;</span></button>
+            <button class="btn btn-link w-100 d-none" type="button" data-cancel-recurring-edit>Cancel editing</button>
+          </form>
+        </section>
+        <section class="surface recurring-list-surface">
+          <div class="section-heading"><div><p class="eyebrow">YOUR SCHEDULES</p><h3>Recurring payments</h3></div><span class="budget-count" data-recurring-count>0 schedules</span></div>
+          <div class="alert alert-danger d-none" data-recurring-list-error role="alert"></div>
+          <div class="recurring-list" data-recurring-list></div>
+          <div class="empty-state d-none" data-empty-recurring>No recurring payments yet. Add a schedule to see it here.</div>
+        </section>
+      </div>
+      <footer class="page-footer">Ledgerly <span>Keep your money in view.</span></footer>
+    </main>
+  </div>
+  <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/auth.js"></script><script src="js/recurring.js"></script>
+</body>
+</html>

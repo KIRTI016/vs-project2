@@ -62,7 +62,6 @@ def test_login_success_failure_and_logout(client):
     })
     assert bad_password.status_code == 401
     assert client.get("/api/expenses").status_code == 401
-
     signed_in = client.post("/api/auth/login", json={
         "email": "SAM@example.com",
         "password": "password123",
@@ -72,6 +71,125 @@ def test_login_success_failure_and_logout(client):
     assert client.get("/api/expenses").status_code == 200
     assert client.post("/api/auth/logout").status_code == 200
     assert client.get("/api/expenses").status_code == 401
+
+
+def test_auth_me_reports_google_signin_availability_without_exposing_credentials(client):
+    client.application.config.update(
+        GOOGLE_CLIENT_ID=None,
+        GOOGLE_CLIENT_SECRET=None,
+    )
+
+    response = client.get("/api/auth/me")
+
+    assert response.status_code == 200
+    assert response.json == {
+        "user": None,
+        "google_sign_in_available": False,
+    }
+
+
+def test_income_and_budget_reject_boolean_amounts(client):
+    assert signup(client).status_code == 201
+    today = date.today().isoformat()
+    month = today[:7]
+
+    income = client.post("/api/income", json={
+        "amount": True,
+        "source": "Invalid amount",
+        "date": today,
+    })
+    budget = client.post("/api/budgets", json={
+        "amount": True,
+        "category": "Overall",
+        "month": month,
+    })
+
+    assert income.status_code == 400
+    assert income.json["error"]
+    assert budget.status_code == 400
+    assert budget.json["error"]
+
+
+@pytest.mark.parametrize("payload", [
+    {"amount": 0, "source": "Salary", "date": "2026-10-26"},
+    {"amount": -1, "source": "Salary", "date": "2026-10-26"},
+    {"amount": 10, "source": "Salary", "date": "20261026"},
+    {"amount": 10, "source": 42, "date": "2026-10-26"},
+    {"amount": 10, "source": "x" * 61, "date": "2026-10-26"},
+    {"amount": 10, "source": "Salary", "date": "2026-10-26", "description": []},
+    {"amount": 10, "source": "Salary", "date": "2026-10-26", "description": "x" * 241},
+])
+def test_income_rejects_invalid_fields(client, payload):
+    assert signup(client).status_code == 201
+
+    response = client.post("/api/income", json=payload)
+
+    assert response.status_code == 400
+    assert response.json["error"]
+
+
+@pytest.mark.parametrize("payload", [
+    {"amount": 0, "category": "Overall", "month": "2026-10"},
+    {"amount": -1, "category": "Overall", "month": "2026-10"},
+    {"amount": 10, "category": "Unknown", "month": "2026-10"},
+    {"amount": 10, "category": "Overall", "month": "2026-13"},
+    {"amount": 10, "category": "Overall", "month": "2026-1"},
+])
+def test_budget_rejects_invalid_fields(client, payload):
+    assert signup(client).status_code == 201
+
+    response = client.post("/api/budgets", json=payload)
+
+    assert response.status_code == 400
+    assert response.json["error"]
+
+
+def test_income_and_budget_are_isolated_between_users(client):
+    assert signup(client, "income-owner@example.com").status_code == 201
+    today = date.today().isoformat()
+    month = today[:7]
+    income = client.post("/api/income", json={
+        "amount": 1200,
+        "source": "Owner salary",
+        "date": today,
+    })
+    budget = client.post("/api/budgets", json={
+        "amount": 2500,
+        "category": "Overall",
+        "month": month,
+    })
+    assert income.status_code == 201
+    assert budget.status_code == 201
+    income_id = income.json["income"]["id"]
+    budget_id = budget.json["budget"]["id"]
+
+    assert client.post("/api/auth/logout").status_code == 200
+    assert signup(client, "income-other@example.com").status_code == 201
+    assert client.get("/api/income").json["income"] == []
+    assert client.get(f"/api/budgets?month={month}").json["budgets"] == []
+    other_budget = client.post("/api/budgets", json={
+        "amount": 4000,
+        "category": "Overall",
+        "month": month,
+    })
+    assert other_budget.status_code == 201
+    assert client.put(f"/api/income/{income_id}", json={
+        "amount": 1,
+        "source": "Hijacked",
+        "date": today,
+    }).status_code == 404
+    assert client.delete(f"/api/income/{income_id}").status_code == 404
+    assert client.delete(f"/api/budgets/{budget_id}").status_code == 404
+
+    assert client.post("/api/auth/logout").status_code == 200
+    assert client.post("/api/auth/login", json={
+        "email": "income-owner@example.com",
+        "password": "password123",
+    }).status_code == 200
+    assert len(client.get("/api/income").json["income"]) == 1
+    owner_budgets = client.get(f"/api/budgets?month={month}").json["budgets"]
+    assert len(owner_budgets) == 1
+    assert owner_budgets[0]["amount"] == 2500
 
 
 @pytest.mark.parametrize("payload", [
@@ -284,4 +402,7 @@ def test_user_data_is_isolated(client):
     client.post("/api/auth/logout")
     assert signup(client, "alex@example.com").status_code == 201
     assert client.get("/api/expenses").json["expenses"] == []
+    assert client.put(f"/api/expenses/{expense_id}", json=expense_payload(
+        date=date.today().isoformat(),
+    )).status_code == 404
     assert client.delete(f"/api/expenses/{expense_id}").status_code == 404

@@ -108,5 +108,17 @@ def logout():
 @auth_bp.get("/me")
 def me():
     if not current_user.is_authenticated:
-        return jsonify({"user": None}), 200
-    return jsonify({"user": current_user.to_dict()})
+        return jsonify({
+            "user": None,
+            "google_sign_in_available": bool(
+                current_app.config["GOOGLE_CLIENT_ID"]
+                and current_app.config["GOOGLE_CLIENT_SECRET"]
+            ),
+        }), 200
+    return jsonify({
+        "user": current_user.to_dict(),
+        "google_sign_in_available": bool(
+            current_app.config["GOOGLE_CLIENT_ID"]
+            and current_app.config["GOOGLE_CLIENT_SECRET"]
+        ),
+    })

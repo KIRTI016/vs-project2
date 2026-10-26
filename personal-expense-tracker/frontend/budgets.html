@@ -11,7 +11,7 @@
 </head>
 <body data-protected>
   <div class="app-shell">
-    <aside class="sidebar"><a class="brand" href="dashboard.html"><span class="brand-mark">L</span> Ledgerly</a><nav class="side-nav" aria-label="Main navigation"><a class="nav-link" href="dashboard.html"><span class="nav-icon">&#9638;</span> Overview</a><a class="nav-link" href="expenses.html"><span class="nav-icon">&#8644;</span> Transactions</a><a class="nav-link active" href="budgets.html"><span class="nav-icon">&#9673;</span> Budgets</a></nav><div class="sidebar-bottom"><span class="sidebar-note">A little more clarity,<br>every month.</span><button class="signout-button" data-logout type="button">Sign out <span aria-hidden="true">&#8599;</span></button></div></aside>
+    <aside class="sidebar"><a class="brand" href="dashboard.html"><span class="brand-mark">L</span> Ledgerly</a><nav class="side-nav" aria-label="Main navigation"><a class="nav-link" href="dashboard.html"><span class="nav-icon">&#9638;</span> Overview</a><a class="nav-link" href="expenses.html"><span class="nav-icon">&#8644;</span> Transactions</a><a class="nav-link active" href="budgets.html"><span class="nav-icon">&#9673;</span> Budgets</a><a class="nav-link" href="recurring.html"><span class="nav-icon">&#8635;</span> Recurring</a><a class="nav-link" href="library.html"><span class="nav-icon">&#9635;</span> Library</a></nav><div class="sidebar-bottom"><span class="sidebar-note">A little more clarity,<br>every month.</span><button class="signout-button" data-logout type="button">Sign out <span aria-hidden="true">&#8599;</span></button></div></aside>
     <main class="main-content">
       <header class="topbar"><div><span class="eyebrow">PERSONAL FINANCE</span><h1>Budgets</h1></div><div class="user-chip"><span class="avatar" data-avatar>U</span><span data-user-name>Account</span></div></header>
       <section class="page-intro"><div><p class="eyebrow">A PLAN FOR YOUR SPENDING</p><h2>Give every rupee a direction.</h2></div><label class="month-picker-label" for="budget-month">Month<input class="form-control" id="budget-month" type="month"></label></section>
@@ -22,9 +22,30 @@
         </section>
         <section class="surface budget-list-surface"><div class="section-heading"><div><p class="eyebrow">THIS MONTH</p><h3>Budget progress</h3></div><span class="budget-count" data-budget-count>0 plans</span></div><div class="budget-list" data-budget-list></div><div class="empty-state d-none" data-empty-budgets>No budgets set for this month.</div></section>
       </div>
+      <section class="surface purchase-simulator" aria-labelledby="purchase-simulator-title">
+        <div class="section-heading"><div><p class="eyebrow">BEFORE YOU BUY</p><h3 id="purchase-simulator-title">Purchase reflection</h3></div><span class="form-accent" aria-hidden="true">₹</span></div>
+        <p class="form-intro">Preview how a purchase could affect this month's category and overall budgets. This is only a simulation; it will not be saved as an expense.</p>
+        <div class="alert alert-danger d-none" data-purchase-error role="alert"></div>
+        <form class="purchase-simulator-form" data-purchase-form>
+          <div class="purchase-field">
+            <label class="form-label" for="purchase-name">Purchase name <span class="optional-label">Optional</span></label>
+            <input class="form-control" id="purchase-name" name="name" type="text" maxlength="80" placeholder="e.g. New headphones">
+          </div>
+          <div class="purchase-field">
+            <label class="form-label" for="purchase-amount">Purchase amount</label>
+            <div class="input-group amount-input"><span class="input-group-text">₹</span><input class="form-control" id="purchase-amount" name="amount" type="number" min="0.01" max="100000000" step="0.01" placeholder="0.00" required></div>
+          </div>
+          <div class="purchase-field">
+            <label class="form-label" for="purchase-category">Expense category</label>
+            <select class="form-select" id="purchase-category" name="category" required><option value="">Choose a category</option><option>Food</option><option>Transport</option><option>Housing</option><option>Shopping</option><option>Health</option><option>Utilities</option><option>Entertainment</option><option>Education</option><option>Other</option></select>
+          </div>
+          <button class="btn btn-primary purchase-simulate-button" type="submit">See budget impact <span aria-hidden="true">&#8594;</span></button>
+        </form>
+        <section class="purchase-result d-none" data-purchase-result aria-live="polite" aria-atomic="true"></section>
+      </section>
       <footer class="page-footer">Ledgerly <span>Keep your money in view.</span></footer>
     </main>
   </div>
-  <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/auth.js"></script><script src="js/budgets.js"></script>
+  <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/auth.js"></script><script src="js/budgets.js"></script><script src="js/purchase-simulator.js"></script>
 </body>
 </html>

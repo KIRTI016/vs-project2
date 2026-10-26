@@ -18,25 +18,27 @@
       <p class="eyebrow">A clearer view of your money</p>
       <h1>Make room for<br><span>what matters.</span></h1>
       <p class="entry-description">A calm, practical place to track spending, plan your month, and see where you stand.</p>
-      <div class="d-flex flex-wrap gap-2 mt-4">
+      <div class="d-flex flex-wrap gap-2 mt-4" data-entry-actions>
         <a class="btn btn-primary btn-lg" href="signup.html">Create your account <span aria-hidden="true">&#8594;</span></a>
         <a class="btn btn-outline-dark btn-lg" href="login.html">Sign in</a>
       </div>
       <p class="entry-footnote">Private by design. Your finances stay in your account.</p>
     </div>
-    <div class="entry-art" aria-hidden="true">
-      <div class="art-caption">MONTHLY SNAPSHOT <span>01 / 03</span></div>
-      <div class="art-chart"><span class="art-ring"></span><div class="art-chart-center"><strong>₹2,840</strong><small>spent this month</small></div></div>
-      <div class="art-bars"><span style="height:38%"></span><span style="height:57%"></span><span style="height:43%"></span><span style="height:72%"></span><span style="height:51%"></span><span style="height:88%"></span><span style="height:63%"></span><span style="height:100%"></span></div>
-      <div class="art-legend"><i></i> Planned spending <b>On track</b></div>
-    </div>
+    <section class="entry-art" aria-label="Personal spending snapshot">
+      <div class="art-caption">YOUR SPENDING <span>LAST 7 MONTHS</span></div>
+      <div class="art-chart">
+        <div class="art-chart-center">
+          <strong data-spending-total>Loading…</strong>
+          <small data-spending-caption>spent this month</small>
+        </div>
+      </div>
+      <div class="art-bars" data-spending-chart role="img" aria-label="Monthly spending history is loading"></div>
+      <div class="art-legend"><i></i> Monthly spending <b>INR</b></div>
+      <p class="art-status" data-spending-status role="status" aria-live="polite">Loading your spending history…</p>
+    </section>
   </main>
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
-  <script>
-    apiRequest('/auth/me').then(({ user }) => {
-      if (user) window.location.replace('dashboard.html');
-    }).catch(() => {});
-  </script>
+  <script src="js/welcome-spending.js"></script>
 </body>
 </html>

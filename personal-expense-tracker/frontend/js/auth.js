@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const message = document.querySelector('[data-message]');
   const passwordToggle = document.querySelector('[data-password-toggle]');
   const passwordInput = document.querySelector('#password');
+  const oauthButtons = [...document.querySelectorAll('[data-oauth-provider]')];
   const oauthErrors = {
     google_unavailable: 'Google sign-in is not configured on the server yet.',
     google_failed: 'Google sign-in could not be completed. Please try again.',
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.history.replaceState({}, document.title, `${window.location.pathname}${queryString ? `?${queryString}` : ''}${window.location.hash}`);
   }
 
-  document.querySelectorAll('[data-oauth-provider]').forEach((button) => {
+  oauthButtons.forEach((button) => {
     button.addEventListener('click', () => {
       window.location.assign(`${API_BASE}/auth/${button.dataset.oauthProvider}`);
     });
@@ -37,7 +38,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    ({ user } = await apiRequest('/auth/me'));
+    const session = await apiRequest('/auth/me');
+    user = session.user;
+    oauthButtons.forEach((button) => {
+      if (button.dataset.oauthProvider === 'google' && !session.google_sign_in_available) {
+        button.disabled = true;
+        button.textContent = 'Google sign-in unavailable';
+        button.title = 'Google sign-in is not configured on the server.';
+      }
+    });
   } catch (error) {
     if (protectedPage) window.location.replace('login.html');
     return;

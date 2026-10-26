@@ -39,6 +39,7 @@ def create_app(test_config=None):
     from .routes.expenses import expenses_bp
     from .routes.income import income_bp
     from .routes.insights import insights_bp
+    from .routes.recurring import recurring_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(expenses_bp, url_prefix="/api/expenses")
@@ -46,6 +47,7 @@ def create_app(test_config=None):
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
     app.register_blueprint(budgets_bp, url_prefix="/api/budgets")
     app.register_blueprint(insights_bp, url_prefix="/api/insights")
+    app.register_blueprint(recurring_bp, url_prefix="/api/recurring")
 
     @login_manager.unauthorized_handler
     def unauthorized():
