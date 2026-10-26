@@ -6,3 +6,31 @@ backend/tests/__pycache__/
 backend/instance/
 *.py[cod]
 .pytest_cache/
+
+# Local environment files; keep example templates versioned.
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.template
+
+# Local environments and generated databases.
+**/.venv/
+**/venv/
+*.db
+*.sqlite
+*.sqlite3
+
+# Frontend dependencies and generated output.
+**/node_modules/
+frontend/dist/
+frontend/coverage/
+
+# Tool caches and local machine files.
+.cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.log
+.DS_Store
+Thumbs.db

@@ -41,6 +41,24 @@
           <a class="btn btn-outline-dark w-100" href="budgets.html">Manage budgets <span aria-hidden="true">&#8594;</span></a>
         </article>
       </section>
+      <section class="dashboard-grid insights-grid" aria-label="Smart spending insights">
+        <article class="surface insights-surface">
+          <div class="section-heading"><div><p class="eyebrow">SMART SPENDING INSIGHTS</p><h3>Your spending, with context</h3></div></div>
+          <p class="insights-period" data-insights-period role="status" aria-live="polite">Loading your saved expenses...</p>
+          <div class="insights-summary">
+            <div><span class="tile-label">Spent this month so far</span><strong data-insights-total>₹0.00</strong></div>
+            <p data-insights-comparison></p>
+          </div>
+          <div class="alert alert-danger d-none" data-insights-error role="alert"></div>
+          <p class="empty-state d-none" data-insights-empty></p>
+          <div class="table-responsive d-none" data-insights-table-wrap>
+            <table class="table insights-table">
+              <thead><tr><th scope="col">Category</th><th scope="col" class="text-end">This period</th><th scope="col" class="text-end">Previous period</th><th scope="col" class="text-end">Change</th></tr></thead>
+              <tbody data-insights-categories></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
       <section class="dashboard-grid lower-grid">
         <article class="surface recent-surface"><div class="section-heading"><div><p class="eyebrow">LATEST ACTIVITY</p><h3>Recent expenses</h3></div><a class="text-link" href="expenses.html">View all <span aria-hidden="true">&#8594;</span></a></div><div class="activity-list" data-recent-list><p class="empty-state">Your latest transactions will show up here.</p></div></article>
         <article class="surface income-surface"><div class="section-heading"><div><p class="eyebrow">MONEY IN</p><h3 data-income-title>Record income</h3></div><span class="income-mark">+</span></div>
@@ -62,5 +80,6 @@
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/dashboard.js"></script>
+  <script src="js/insights.js"></script>
 </body>
 </html>

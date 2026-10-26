@@ -38,12 +38,14 @@ def create_app(test_config=None):
     from .routes.dashboard import dashboard_bp
     from .routes.expenses import expenses_bp
     from .routes.income import income_bp
+    from .routes.insights import insights_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(expenses_bp, url_prefix="/api/expenses")
     app.register_blueprint(income_bp, url_prefix="/api/income")
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
     app.register_blueprint(budgets_bp, url_prefix="/api/budgets")
+    app.register_blueprint(insights_bp, url_prefix="/api/insights")
 
     @login_manager.unauthorized_handler
     def unauthorized():

@@ -102,8 +102,9 @@ a:hover { color: var(--green); }
 .tile-dot { position: absolute; top: 18px; right: 18px; width: 8px; height: 8px; border-radius: 50%; }
 .dot-green { background: #66a282; }.dot-coral { background: var(--coral); }.dot-yellow { background: var(--yellow); }
 .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .8fr); gap: 13px; margin-top: 14px; }
+.insights-grid { grid-template-columns: minmax(0, 1fr); }
 .surface { background: #fff; border: 1px solid var(--line); border-radius: 5px; }
-.spending-surface, .budget-surface, .recent-surface, .income-surface, .expense-form-surface, .expenses-list-surface, .budget-form-surface, .budget-list-surface { padding: 21px; }
+.spending-surface, .budget-surface, .recent-surface, .income-surface, .insights-surface, .expense-form-surface, .expenses-list-surface, .budget-form-surface, .budget-list-surface { padding: 21px; }
 .section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .section-heading .eyebrow { margin-bottom: 4px; }
 .section-heading h3 { margin: 0; font: 800 15px var(--heading); }
@@ -125,6 +126,15 @@ a:hover { color: var(--green); }
 .budget-status-note { min-height: 32px; margin: 0 0 15px; color: #768078; font-size: 11px; }
 .budget-surface .btn { font-size: 11px; }
 .lower-grid { grid-template-columns: minmax(0, 1.4fr) minmax(280px, .8fr); }
+.insights-period { margin: 10px 0 0; color: var(--muted); font-size: 11px; }
+.insights-summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 15px 0; padding: 13px 15px; background: #f5f8f4; border-radius: 4px; }
+.insights-summary strong { display: block; margin-top: 5px; font: 800 20px var(--heading); }
+.insights-summary p { margin: 0; color: #68736a; font-size: 11px; line-height: 1.6; text-align: right; }
+.insights-table { min-width: 540px; margin: 0; vertical-align: middle; }
+.insights-table th { padding: 9px 8px; border-bottom-color: var(--line); color: #929a93; font-size: 9px; font-weight: 700; }
+.insights-table td { padding: 10px 8px; border-bottom-color: #f0f1ed; color: #647068; font-size: 11px; }
+.insights-table td:first-child { color: var(--ink); font-weight: 600; }
+.insight-change-up { color: #b75643 !important; }.insight-change-down { color: var(--green-dark) !important; }
 .activity-list { margin-top: 15px; }
 .activity-row { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-top: 1px solid #eef0ec; }
 .activity-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #eff3ec; color: var(--green); font: 700 12px var(--heading); }
@@ -184,8 +194,9 @@ a:hover { color: var(--green); }
   .main-content { margin-left: 0; padding: 20px 15px 15px; }.topbar { min-height: 40px; }.topbar h1 { font-size: 18px; }.user-chip { font-size: 11px; }.avatar { width: 29px; height: 29px; }
   .page-intro { align-items: start; gap: 12px; margin: 27px 0 17px; }.page-intro h2 { max-width: 300px; font-size: 21px; }.page-intro > .btn { white-space: nowrap; padding: 8px 10px; font-size: 11px; }.summary-grid { gap: 8px; }.summary-tile { min-height: 112px; padding: 13px; }.summary-tile strong { margin-top: 11px; font-size: 20px; }.tile-foot { font-size: 9px; }
   .dashboard-grid, .lower-grid, .transactions-layout, .budget-page-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
-  .spending-surface, .budget-surface, .recent-surface, .income-surface, .expense-form-surface, .expenses-list-surface, .budget-form-surface, .budget-list-surface { padding: 16px; }
+  .spending-surface, .budget-surface, .recent-surface, .income-surface, .insights-surface, .expense-form-surface, .expenses-list-surface, .budget-form-surface, .budget-list-surface { padding: 16px; }
   .chart-layout { grid-template-columns: minmax(130px, .8fr) minmax(130px, 1fr); gap: 10px; min-height: 170px; }.chart-container { height: 165px; }.category-legend { gap: 8px; }.legend-row { font-size: 9px; }.legend-row strong { font-size: 9px; }
+  .insights-summary { align-items: flex-start; flex-direction: column; gap: 9px; }.insights-summary p { text-align: left; }
   .expense-form-surface { position: static; }.filters-row { gap: 7px; padding: 9px; }.filter-field { min-width: calc(50% - 6px); }.filter-clear { flex: 1; }
   .month-picker-label .form-control { min-width: 130px; }.page-footer { margin-top: 15px; }
 }

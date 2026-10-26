@@ -60,6 +60,7 @@ Restart the backend after setting the values. The Google button creates a Ledger
 - Add expenses with a category, date, payment method, and optional description; view, edit, delete, and filter personal expense history
 - Record income and see monthly income, expense, and net balance totals
 - Set overall or category-specific monthly budgets and track spending progress
+- Review current-month category spending and compare it with the matching date range in the previous month
 - View a monthly spending-by-category chart and recent expenses
 - Responsive layout for desktop and mobile screens
 
@@ -81,6 +82,7 @@ All endpoints are prefixed with `/api`.
 | `POST` | `/budgets` | Create or update a monthly budget |
 | `DELETE` | `/budgets/<id>` | Delete a budget |
 | `GET` | `/dashboard` | Read monthly totals and category breakdown |
+| `GET` | `/insights` | Read current-month spending and previous-period category comparisons |
 
 Expense list filters are optional query parameters: `category`, `start=YYYY-MM-DD`, and `end=YYYY-MM-DD`.
 
