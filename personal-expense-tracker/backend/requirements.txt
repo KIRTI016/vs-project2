@@ -1,3 +1,4 @@
+gunicorn==21.2.0
 Flask==3.1.2
 Authlib==1.6.5
 Flask-Cors==5.0.0
